@@ -8,7 +8,7 @@ import portrait from '../assets/ahmed.webp'
 import { SOCIALS } from '../data/socials'
 import { Kicker, coverOf, tie } from './BlogPage'
 import type { PostMeta, TocEntry } from '../content/types'
-import { BLOG, MAIN } from '../site'
+import { BLOG, EMAIL } from '../site'
 
 const iconOf = (name: string) => SOCIALS.find((s) => s.name === name)?.path ?? ''
 
@@ -307,8 +307,7 @@ function Share({ post }: { post: PostMeta }) {
   )
 }
 
-/** Who wrote it, under every post: a face and two sentences, then the way to
- *  the rest of the site. */
+/** Who wrote it, under every post: a face and two sentences. */
 function AuthorCard() {
   return (
     <aside className="mt-10 flex flex-col gap-5 rounded-[1.75rem] bg-white p-6 ring-1 ring-hairline sm:flex-row sm:items-center sm:p-7">
@@ -320,12 +319,6 @@ function AuthorCard() {
           Full-Stack AI Engineer building production AI systems and the products around them.
         </p>
       </div>
-      <a
-        href={`${MAIN}/`}
-        className="press shrink-0 self-start rounded-full px-5 py-2.5 text-[0.75rem] font-bold tracking-[0.14em] text-heading uppercase ring-1 ring-heading/20 hover:bg-heading hover:text-white sm:self-auto"
-      >
-        About me
-      </a>
     </aside>
   )
 }
@@ -336,8 +329,7 @@ function ReadingProgress() {
   return <div aria-hidden className="reading-progress" />
 }
 
-/** Where to go next: the neighbouring posts, then the one thing this site
- *  exists for — talking about work. */
+/** Where to go next: the neighbouring posts, then a way to get in touch. */
 function End({ newer, older }: { newer?: PostMeta; older?: PostMeta }) {
   return (
     <footer className="mt-24 lg:mt-32">
@@ -403,7 +395,7 @@ export function BackPill({ href, children }: { href: string; children: string })
 }
 
 /** The ink "Let's talk" panel that closes a post or a service page. */
-export function TalkPanel({ title, body, href = `${MAIN}/#contact` }: { title: string; body: string; href?: string }) {
+export function TalkPanel({ title, body }: { title: string; body: string }) {
   return (
     <div className="relative isolate overflow-hidden rounded-[2rem] bg-ink px-7 py-12 sm:px-12 sm:py-14">
       <div aria-hidden className="absolute -top-1/2 -right-1/4 -z-10 size-[60%] rounded-full bg-brand/20 blur-[100px]" />
@@ -416,10 +408,9 @@ export function TalkPanel({ title, body, href = `${MAIN}/#contact` }: { title: s
           </p>
           <p className="mt-3 max-w-[46ch] text-body text-dark-muted">{body}</p>
         </div>
-        {/* A plain <a>: the contact form is on the portfolio, another site. */}
         <a
-          href={href}
-          data-track="contact_cta"
+          href={`mailto:${EMAIL}`}
+          data-track="email_click"
           data-track-from="talk_panel"
           className="press inline-flex shrink-0 items-center gap-2.5 self-start rounded-full bg-gradient-to-b from-brand to-brand-deep px-6 py-3.5 text-[0.75rem] font-bold tracking-[0.14em] text-white uppercase shadow-lg shadow-brand/25 hover:brightness-110 sm:self-auto"
         >

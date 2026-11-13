@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { consentNeeded, setConsent, type Choice } from '../analytics'
-import { MAIN } from '../site'
 
 /** Fired by the footer's "Cookie settings" to bring the banner back. */
 export const OPEN_CONSENT = 'consent:open'
@@ -105,9 +105,9 @@ export default function ConsentBanner() {
       <p className="mt-5 text-sm leading-relaxed text-dark-muted">
         With your consent, this site uses Google Analytics cookies to measure how its pages are used. The
         data is never used for advertising or sold to third parties.{' '}
-        <a href={`${MAIN}/privacy`} className="whitespace-nowrap text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">
+        <Link to="/privacy" className="whitespace-nowrap text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">
           Privacy policy
-        </a>
+        </Link>
       </p>
 
       <div className="mt-5 flex gap-2.5">

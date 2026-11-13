@@ -6,12 +6,12 @@ import { Marked } from 'marked'
 import hljs from 'highlight.js/lib/common'
 import type { Plugin } from 'vite'
 import type { PostMeta, TocEntry } from './src/content/types.ts'
-import { BLOG, HOME, MAIN } from './src/site.ts'
+import { BLOG, HOME, PRIVACY } from './src/site.ts'
 
 const DIR = join(import.meta.dirname, 'src/content/posts')
 const WORDS_PER_MINUTE = 220
 /** Posts live at `/<slug>`, so a slug can't be a folder `public/` or the build already owns. */
-const RESERVED = ['assets', 'fonts', 'blog-images', 'index', '404', 'sitemap', 'robots']
+const RESERVED = ['assets', 'fonts', 'blog-images', 'index', '404', 'sitemap', 'robots', 'privacy']
 
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -239,6 +239,13 @@ export default function blog(): Plugin[] {
           '\n</urlset>\n',
       })
 
+      // Not in the sitemap: nothing on it to rank for. Still a real page, so Pages serves it with a 200.
+      this.emitFile({
+        type: 'asset',
+        fileName: 'privacy.html',
+        source: withMeta(html, { ...PRIVACY, path: '/privacy', type: 'website' }),
+      })
+
       // The index's head comes from HOME too, so index.html's literal title is only what dev shows.
       shell.source = withMeta(html, { ...HOME, path: '/', type: 'website' })
 
@@ -252,7 +259,7 @@ export default function blog(): Plugin[] {
             path: `/${meta.slug}`,
             type: 'article',
             // Lets search engines show the post as an article (date, author). The author is
-            // the Person block every page carries, the same @id the portfolio uses.
+            // the Person block every page carries (index.html).
             jsonLd: {
               '@context': 'https://schema.org',
               '@type': 'BlogPosting',
@@ -264,8 +271,8 @@ export default function blog(): Plugin[] {
               url: `${BLOG}/${meta.slug}`,
               mainEntityOfPage: `${BLOG}/${meta.slug}`,
               image: `${BLOG}/og.png`,
-              author: { '@id': `${MAIN}/#person` },
-              publisher: { '@id': `${MAIN}/#person` },
+              author: { '@id': `${BLOG}/#person` },
+              publisher: { '@id': `${BLOG}/#person` },
               isPartOf: { '@id': `${BLOG}/#blog` },
             },
           }),

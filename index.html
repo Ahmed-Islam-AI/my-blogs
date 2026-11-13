@@ -24,7 +24,7 @@
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- The Person block is the portfolio's, same @id, so posts and portfolio are one author.
+    <!-- Person + Blog JSON-LD, inherited by every built page; posts point their author at #person.
          `sameAs` must match src/data/socials.ts (not WhatsApp); a DEV check there warns if they drift. -->
     <script type="application/ld+json" id="person-ld">
       {
@@ -32,12 +32,12 @@
         "@graph": [
           {
             "@type": "Person",
-            "@id": "https://ahmedislam.tech/#person",
+            "@id": "https://blog.ahmedislam.tech/#person",
             "name": "Ahmed Islam",
             "jobTitle": "Full-Stack AI Engineer",
             "description": "Full-Stack AI Engineer building agentic AI systems, RAG pipelines, machine learning models and web apps.",
-            "url": "https://ahmedislam.tech/",
-            "image": "https://ahmedislam.tech/og.png",
+            "url": "https://blog.ahmedislam.tech/",
+            "image": "https://blog.ahmedislam.tech/og.png",
             "sameAs": [
               "https://www.linkedin.com/in/ahmed-islam-ai/",
               "https://github.com/Ahmed-Islam-AI",
@@ -55,8 +55,8 @@
             "name": "Ahmed Islam — Notes from the build",
             "url": "https://blog.ahmedislam.tech/",
             "inLanguage": "en",
-            "author": { "@id": "https://ahmedislam.tech/#person" },
-            "publisher": { "@id": "https://ahmedislam.tech/#person" }
+            "author": { "@id": "https://blog.ahmedislam.tech/#person" },
+            "publisher": { "@id": "https://blog.ahmedislam.tech/#person" }
           }
         ]
       }

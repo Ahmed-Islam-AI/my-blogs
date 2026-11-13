@@ -22,17 +22,24 @@ and gained a second kind of post, the case study:
   byline. It works on articles too.
 - Posts live at the root (`/<slug>`). Because a folder in `public/` beats an `.html` file
   on GitHub Pages, the build refuses a slug that names a folder it owns.
-- **The nav and footer point back to the portfolio.** The nav keeps the portfolio's links
-  (as absolute URLs) so both sites read as one; its Blog pill is always lit. The footer's
-  columns are Portfolio, Recent writing (the newest five posts, derived) and Elsewhere.
-  The portfolio's privacy policy covers this site, so the consent banner and footer link there.
+- **Fully separate, by Ahmed's call the same day.** The first version kept the portfolio's
+  nav links, a Portfolio column in the footer, an "About me" button, a "Let's talk" button to
+  the portfolio's contact form, a CV download, and the portfolio's privacy policy; the
+  portfolio had a Blog button and forwarding pages. He rejected both directions ("it is a
+  totally separate thing, so keep it separate"). Now the nav is the name and the Blog pill
+  (no menu on a phone, since there is nothing to put in it); the footer is Recent writing
+  (the newest five posts, derived) and Elsewhere; "Let's talk" is a `mailto:`; the Person
+  JSON-LD has this site's own `@id`; and the share card (`og.png`) is the blog's own,
+  rendered from HTML in the same style as the portfolio's but naming this site.
 - `index.css` is a copy of the portfolio's, whole: the post pages lean on its tokens,
   `type-hero`, `press`, the reveal rules and `hero-grid` (the covers), and trimming it by
   hand risked breaking something quietly for a few kB.
-- Analytics is the portfolio's GA4 property, gated on this host. One report covers both
-  sites; consent is per-site, since `localStorage` is per-origin.
-- The old addresses forward here: the portfolio's build writes `blog/index.html` and
-  `blog/<slug>.html` as instant meta-refresh pages with a canonical to the new URL.
+- **Its own /privacy page.** The site runs GA4, which Google's terms require a site to
+  disclose, so it needs a policy that names it. Written from what this site does: GA4 with
+  the same consent rules, an email address and no form, GitHub Pages hosting. It uses the
+  same measurement ID as the portfolio (one GA property; filter by hostname). Consent is
+  per-site anyway, since `localStorage` is per-origin.
+- The portfolio's old `/blog` addresses do not forward here; they redirect to its home page.
 - Why a subdomain at all: Ahmed's call. The trade-off he accepted is that search engines
   treat a subdomain largely as its own site, so posts no longer add weight to
   ahmedislam.tech itself.

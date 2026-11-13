@@ -3,22 +3,7 @@ import { posts } from 'virtual:blog'
 import { analyticsOn } from '../analytics'
 import { OPEN_CONSENT } from './ConsentBanner'
 import { SOCIALS } from '../data/socials'
-import { MAIN } from '../site'
-
-const EMAIL = 'hello@ahmedislam.tech'
-
-/** The portfolio's sections with its own numbering, so both footers read as one site. */
-const PORTFOLIO = [
-  { id: 'about', index: '02', label: 'About' },
-  { id: 'experience', index: '03', label: 'Experience' },
-  { id: 'skills', index: '04', label: 'Skills' },
-  { id: 'services', index: '05', label: 'Services' },
-  { id: 'reviews', index: '06', label: 'Reviews' },
-  { id: 'method', index: '07', label: 'Method' },
-  { id: 'projects', index: '08', label: 'Projects' },
-  { id: 'certifications', index: '09', label: 'Certifications' },
-  { id: 'contact', index: '10', label: 'Contact' },
-]
+import { EMAIL } from '../site'
 
 const RECENT = 5
 
@@ -54,23 +39,8 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Portfolio and Writing stay side by side even on a phone; Elsewhere spans below. */}
-        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 lg:mt-14 lg:grid-cols-[1fr_1fr_auto] lg:gap-16">
-          <nav aria-label="Portfolio">
-            <p className="text-eyebrow text-brand-bright uppercase">Portfolio</p>
-            {/* Two sub-columns only from lg: a phone column is too narrow to split. */}
-            <ul className="mt-5 grid gap-3 lg:grid-cols-2 lg:gap-y-3.5">
-              {PORTFOLIO.map((section) => (
-                <li key={section.id}>
-                  <a href={`${MAIN}/#${section.id}`} className={linkClass}>
-                    <span className="mr-2 text-[0.6875rem] text-white/50 tabular-nums">{section.index}</span>
-                    {section.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
+        {/* Writing, then Elsewhere: stacked on a phone, side by side from lg. */}
+        <div className="mt-12 grid gap-y-10 lg:mt-14 lg:grid-cols-[1fr_auto] lg:gap-16">
           <nav aria-label="Recent writing">
             <p className="text-eyebrow text-brand-bright uppercase">Recent writing</p>
             <ul className="mt-5 grid gap-3.5">
@@ -94,7 +64,7 @@ export default function Footer() {
           </nav>
 
           {/* Icon-only below lg; aria-label keeps each name for screen readers. */}
-          <div className="col-span-2 lg:col-span-1">
+          <div>
             <p className="text-eyebrow text-brand-bright uppercase">Elsewhere</p>
             <ul className="mt-5 flex flex-wrap gap-2.5 lg:grid lg:gap-3.5">
               {SOCIALS.map((social) => (
@@ -121,10 +91,6 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-
-            <a href={`${MAIN}/Ahmed-Islam-CV.pdf`} download className={`${linkClass} mt-6 inline-block`}>
-              <span className="border-b border-white/20 pb-0.5">Download CV</span>
-            </a>
           </div>
         </div>
 
@@ -177,9 +143,9 @@ export default function Footer() {
               ·
             </span>
             {/* Required by GA's terms and EU consent law; -my/py keep 44px targets. */}
-            <a href={`${MAIN}/privacy`} className="-my-3 py-3 transition-colors hover:text-white">
+            <Link to="/privacy" className="-my-3 py-3 transition-colors hover:text-white">
               Privacy policy
-            </a>
+            </Link>
             {analyticsOn && (
               <>
                 <span aria-hidden className="text-white/25">

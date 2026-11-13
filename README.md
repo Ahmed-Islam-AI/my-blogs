@@ -1,7 +1,6 @@
 # Ahmed Islam — Blog
 
 Articles and case studies, live at **https://blog.ahmedislam.tech**.
-The portfolio is a separate repo and site, at https://ahmedislam.tech.
 
 ```
 npm install
@@ -67,14 +66,18 @@ it has a post that is not the featured one (the newest post is always featured).
   Never feed it anything a visitor typed.
 - If you edit a code block, re-run it and update its ` ```output ` block. Every
   number in a post should be real output.
-- `src/site.ts` holds the two addresses (`BLOG`, `MAIN`) and the index page's
-  title. To move to another subdomain, change `BLOG` there and the URLs in
+- **This site links to no other site of Ahmed's**, and the portfolio does not link
+  here. The nav is the name and the Blog pill; "Let's talk" is an email link.
+  Don't add cross-links back.
+- `src/site.ts` holds the address (`BLOG`), the email, and the titles of the index
+  and /privacy. To move to another subdomain, change `BLOG` there and the URLs in
   `index.html` and `public/robots.txt`, then update the custom domain in
   Settings → Pages and the DNS record.
-- The nav, footer and `src/index.css` are copies of the portfolio's. If the
-  portfolio's design tokens or social links change, copy the change here.
-- Analytics is the portfolio's GA4 property (`src/analytics.ts`). It only runs on
-  the live host. The consent banner and the privacy policy link go to the portfolio.
+- Analytics is GA4 (`src/analytics.ts`), and only runs on the live host. **/privacy
+  describes exactly what the site collects**: change that page whenever analytics
+  changes, or if a form is ever added. `privacy` is a reserved slug.
+- `public/og.png` is the share card every page uses. It was rendered from HTML in
+  the site's own font and colours; if you replace it, keep it 1200x630.
 
 ## Hosting
 

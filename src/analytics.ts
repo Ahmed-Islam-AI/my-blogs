@@ -1,5 +1,5 @@
-/** GA4 with Consent Mode v2, only on the live blog host: the portfolio's GA property, so one
- *  report covers both sites. Events: contact_cta, email_click. Consent rules match the portfolio's. */
+/** GA4 with Consent Mode v2, only on the live blog host. Events: email_click. The ID is the one
+ *  the portfolio uses; filter reports by hostname, or make the blog its own property and swap it. */
 import { BLOG } from './site'
 
 /** GA4 → Admin → Data streams → Measurement ID; public, not a secret. Typed `string`, not a

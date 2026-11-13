@@ -5,7 +5,7 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import PostCover from '../components/PostCover'
 import type { PostMeta, PostType } from '../content/types'
-import { HOME, MAIN } from '../site'
+import { HOME } from '../site'
 
 /** "25 Oct 2026". en-GB to match the site's British spelling; UTC so a post
  *  dated the 25th never renders as the 24th west of Greenwich. */
@@ -105,11 +105,7 @@ export default function BlogPage() {
                 data-reveal
                 className="mt-16 rounded-[2rem] bg-white px-8 py-12 text-lead text-muted ring-1 ring-hairline"
               >
-                The first post is being written. Until then, the{' '}
-                <a href={`${MAIN}/projects`} className="text-heading underline decoration-brand/60 underline-offset-4 hover:text-brand">
-                  projects
-                </a>{' '}
-                are the best record of the work.
+                The first post is being written.
               </p>
             )}
           </div>
