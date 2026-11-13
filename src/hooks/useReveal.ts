@@ -10,10 +10,11 @@ const whenFontsReady = () =>
     new Promise((resolve) => setTimeout(resolve, 2500)),
   ]))
 
-/** Reveals each `[data-reveal]` element once it scrolls into view; re-runs on route change.
+/** Reveals each `[data-reveal]` element once it scrolls into view; re-runs on route change, and on
+ *  a query change too, since the index's filters (`?type=`) mount and unmount elements.
  *  ponytail: IO + CSS transitions, no library; add GSAP only for pinning or scrubbed timelines. */
 export function useReveal() {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
   useEffect(() => {
     const targets = document.querySelectorAll('[data-reveal]:not([data-revealed])')
@@ -55,5 +56,5 @@ export function useReveal() {
       observer.disconnect()
       window.removeEventListener('resize', sweep)
     }
-  }, [pathname])
+  }, [pathname, search])
 }

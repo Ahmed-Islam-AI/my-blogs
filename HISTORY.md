@@ -13,11 +13,10 @@ plugin in `blog.vite.ts`. "This site" in the text means the portfolio and the bl
 On Ahmed's instruction the blog moved to this repo, served at **blog.ahmedislam.tech**,
 and gained a second kind of post, the case study:
 
-- **`type: case-study`** in the frontmatter. The index files it under **Case studies**,
-  above **Articles**; its kicker and cover read "Case study"; its issue number counts
-  within its own type, so the first case study is No. 01 even after ten articles. A group
-  heading only appears once it has a post besides the featured one, and the index lead
-  only mentions case studies once one exists: the page never promises work it can't show.
+- **`type: case-study`** in the frontmatter. Its kicker and cover read "Case study"; its
+  issue number counts within its own type, so the first case study is No. 01 even after ten
+  articles. The index lead only mentions case studies once one exists: the page never
+  promises work it can't show. (How the index shows them changed the same day; see below.)
 - **`project:`** is an optional URL that adds a "View the project" button under the
   byline. It works on articles too.
 - Posts live at the root (`/<slug>`). Because a folder in `public/` beats an `.html` file
@@ -40,6 +39,44 @@ and gained a second kind of post, the case study:
   same measurement ID as the portfolio (one GA property; filter by hostname). Consent is
   per-site anyway, since `localStorage` is per-origin.
 - The portfolio's old `/blog` addresses do not forward here; they redirect to its home page.
+
+## The landing page, nav and footer (2026-11-13, second pass)
+
+Ahmed's review of the first version: the nav was fine but "not sticky", its lone Blog button
+was not a concept, the index "does not look like a blog website", and the footer was too big.
+He chose each answer below from mock-ups.
+
+- **"Not sticky" could not be reproduced**: measured, the floating pill stayed at the top on
+  every scroll position, in dev and in the build. The likely cause is a full-page screenshot,
+  which draws a fixed bar once at the top of the image. The new bar is pinned to the top
+  edge, full width, so there is no gap above it to make it look detached.
+- **Nav: a topic bar with search.** Name and blog name left, topics (All, Articles, Case
+  studies) centre, search right; below `lg` the topics take a second row. The topics *are*
+  the index's filter, as links to `/?type=…`, so a filtered view can be shared and the back
+  button works. The current topic gets an orange underline, a shape and not only a colour.
+- **It tightens on scroll by moving, not resizing**: the bar rises 8px and its content drops
+  4px, which trims the top padding with transforms only (STYLE.md: no animating layout).
+- **`--space-nav` follows the bar**: 7.25rem below `lg` (the bar is 114px with its topic
+  row), 5.5rem from `lg` (77px). The floating pill needed 5.5/6.5. Re-measure if the bar changes.
+- **The index**: the header, then the newest post as the featured card (now with a "Latest"
+  eyebrow), then **All posts** as hairline rows (date, kind, title, summary, reading time),
+  with tag chips above them. The list includes the featured post: it is the archive, and
+  every blog index works that way. Filtering hides the featured card. An empty filter says
+  so ("No case studies yet.") rather than showing nothing. The grouped Case studies /
+  Articles grids from the first pass are gone; the nav's topics replaced them.
+- **Filters are read after hydration** (`useFilters` in `filters.ts`). The prerendered index
+  is unfiltered, and the browser's first render must match it, so `?type=` is ignored until
+  the first render has hydrated, then applied; components that mount later read it at once.
+- **`useReveal` re-runs on a query change**, not just a path change. Filtering unmounts the
+  featured card; without this, the card came back at opacity 0, since nothing observed it.
+  Rows and chips deliberately carry no `data-reveal` for the same reason.
+- **Search is a native `<dialog>`** (Escape, focus trap and backdrop for free), opened by
+  the button, `/` or Ctrl/Cmd+K, matching every typed word against title, summary, tags and
+  type; Enter opens the first result. Chrome's blue clear-text button is hidden: off-palette,
+  and Esc already does its job.
+- **Footer: the same design, minus its link columns.** Recent writing, All posts and the
+  social links (Elsewhere) were removed on Ahmed's instruction; the name, availability,
+  email, wordmark and legal line stay.
 - Why a subdomain at all: Ahmed's call. The trade-off he accepted is that search engines
   treat a subdomain largely as its own site, so posts no longer add weight to
   ahmedislam.tech itself.
@@ -126,7 +163,8 @@ chose each of these from options:
   as STYLE.md asks of all running text. The index stays left-aligned like every
   other page; only the post masthead centres. The index is laid out like a
   newsroom: the newest post as a featured story (cover beside the copy from
-  `lg`), everything older as a two-column grid of cover cards. Paper, not ink:
+  `lg`), everything older as a two-column grid of cover cards (replaced 2026-11-13 by a
+  list of rows; see "The landing page, nav and footer"). Paper, not ink:
   this is reading, and the site's reading ground is light.
 - **Automatic drawn covers** — `PostCover.tsx`. A dot field seeded from the
   slug (mulberry32, `seeded`), so each post's cover is unique and stable: ink,

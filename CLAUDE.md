@@ -9,6 +9,9 @@ other. Don't add a link either way (HISTORY.md).
   anything visual; "The blog (reading surfaces)" is the part written for this site.
 - **HISTORY.md** holds the reason behind each design decision. Read the entry before undoing one.
 - Never invent a number, client or metric in a post. Every output block is real output.
+- Never read `?type=`/`?tag=` (or anything from `window`) during the first render: use
+  `useFilters`, which waits for hydration. Index rows and chips carry no `data-reveal`.
+- `--space-nav` in `index.css` must clear the fixed bar; re-measure it if the nav changes.
 - `/privacy` must describe what the site actually collects. Change it with any change to
   `src/analytics.ts`, and if a form is ever added.
 - Verify visual changes on the production build (`npm run build && npx vite preview`) at

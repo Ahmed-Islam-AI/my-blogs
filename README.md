@@ -44,13 +44,21 @@ type: case-study
 project: https://github.com/Ahmed-Islam-AI/some-repo
 ```
 
-- `type: case-study` files it under **Case studies** on the index, labels its
-  cover and kicker "Case study", and numbers it separately from articles.
+- `type: case-study` puts it under **Case studies** in the nav's topics, labels
+  its cover and kicker "Case study", and numbers it separately from articles.
 - `project:` is optional, and works on articles too. It adds a
   "View the project" button under the author line. It must be a full `https://` URL.
 
-Anything without `type:` is an article. A group on the index only appears once
-it has a post that is not the featured one (the newest post is always featured).
+Anything without `type:` is an article.
+
+## How readers find posts
+
+- The index features the newest post, then lists **every** post as a row.
+- The nav's topics (All, Articles, Case studies) filter that list through
+  `?type=`, and the tag chips above it through `?tag=`, so a filtered view is a
+  link you can share. Tags come from each post's `tags:` line.
+- **Search** (the nav button, `/` or Ctrl+K) matches every word typed against
+  titles, summaries, tags and the type.
 
 ## Rules worth knowing
 

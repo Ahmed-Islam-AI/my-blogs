@@ -1,14 +1,7 @@
 import { Link } from 'react-router-dom'
-import { posts } from 'virtual:blog'
 import { analyticsOn } from '../analytics'
 import { OPEN_CONSENT } from './ConsentBanner'
-import { SOCIALS } from '../data/socials'
 import { EMAIL } from '../site'
-
-const RECENT = 5
-
-const linkClass =
-  'text-sm text-dark-muted transition-colors hover:text-white focus-visible:text-white'
 
 export default function Footer() {
   return (
@@ -37,61 +30,6 @@ export default function Footer() {
             </span>
             Available for work
           </p>
-        </div>
-
-        {/* Writing, then Elsewhere: stacked on a phone, side by side from lg. */}
-        <div className="mt-12 grid gap-y-10 lg:mt-14 lg:grid-cols-[1fr_auto] lg:gap-16">
-          <nav aria-label="Recent writing">
-            <p className="text-eyebrow text-brand-bright uppercase">Recent writing</p>
-            <ul className="mt-5 grid gap-3.5">
-              {posts.slice(0, RECENT).map((post) => (
-                <li key={post.slug}>
-                  <Link to={`/${post.slug}`} className={`${linkClass} line-clamp-2`}>
-                    {post.title}
-                  </Link>
-                </li>
-              ))}
-              {/* An arrow in front: this one is the whole list, the others are single posts. */}
-              <li>
-                <Link to="/" className={linkClass}>
-                  <span aria-hidden className="mr-2 text-[0.6875rem] text-brand-bright">
-                    &rarr;
-                  </span>
-                  All posts
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          {/* Icon-only below lg; aria-label keeps each name for screen readers. */}
-          <div>
-            <p className="text-eyebrow text-brand-bright uppercase">Elsewhere</p>
-            <ul className="mt-5 flex flex-wrap gap-2.5 lg:grid lg:gap-3.5">
-              {SOCIALS.map((social) => (
-                <li key={social.name}>
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.name}
-                    className={`${linkClass} group inline-flex items-center gap-2.5`}
-                  >
-                    <span className="grid size-11 place-items-center rounded-full bg-white/[0.05] text-white/45 ring-1 ring-white/10 transition-colors group-hover:bg-brand group-hover:text-white group-hover:ring-brand lg:size-4 lg:bg-transparent lg:text-white/30 lg:ring-0 lg:group-hover:bg-transparent lg:group-hover:text-brand">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="size-[18px] shrink-0 lg:size-4"
-                        aria-hidden
-                      >
-                        <path d={social.path} />
-                      </svg>
-                    </span>
-                    <span className="hidden lg:inline">{social.name}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
         {/* Email */}
