@@ -55,6 +55,9 @@ it has a post that is not the featured one (the newest post is always featured).
 
 ## Rules worth knowing
 
+- **Read STYLE.md before touching anything visual.** It is the portfolio's design
+  contract, copied here because both sites share it; "The blog (reading surfaces)"
+  is the part written for this site. HISTORY.md holds the reasons behind the design.
 - **Never name a `public/` folder like a post slug.** GitHub Pages serves a
   folder before an `.html` file, so a folder called `rag-evals/` would break the
   post `rag-evals`. That is why images live in `blog-images/`. The build refuses

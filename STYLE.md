@@ -1,0 +1,365 @@
+# Style guide — Ahmed Islam portfolio
+
+The design contract for this site. Read it before changing anything visual.
+
+**Tokens are the interface.** Every colour, font and type size below exists as a
+token in the `@theme` block of `src/index.css`. Use `bg-brand`, `text-muted`,
+`text-display` — never a raw hex, never an arbitrary `text-[19px]`. If you need a
+value that doesn't exist, add a token rather than a one-off.
+
+Tailwind 4 is CSS-first here: **there is no `tailwind.config.js`.** Editing
+`@theme` in `src/index.css` is how you change the design system.
+
+---
+
+## The one rule that matters most
+
+**Orange is the only accent.** Near-black carries drama, warm off-white carries
+content, and `#F15629` is the single colour allowed to mean something.
+
+This is not a preference, it is what stops the site looking like a template. It
+has already been defended twice against reference designs:
+
+- A reference coded its skill categories with seven pastel dot colours. We used
+  per-category **counts** instead — more information than a colour legend, and no
+  rainbow.
+- Technology icons render in orange, **never** in their real brand colours. 55
+  brand palettes at once is noise, not identity.
+- Projects' giant background word used to tint per project, which is why
+  `accentColor` held a spread across the **warm** range. Both the word and the
+  field were **removed 2026-08-30** with the section rebuild: no travelling word
+  means nothing to tint, so the compromise is no longer needed and the rule holds
+  cleanly again. Don't reintroduce per-project hues without an effect that needs
+  them.
+
+Green appears in exactly one place: the `success` token on the "available for
+work" dot, because green is the universal availability signal and orange there
+would read as decoration rather than status. Do not introduce a third accent.
+
+**Certifications is a full-bleed `brand` band** — the one place the accent is used
+as a surface rather than a highlight. That is still one accent, but it inverts the
+rule locally: on that band orange can no longer *signal*, because a signal has to
+differ from its ground. So there, accents become **ink**: the active `SectionRail`
+tick, the headline's full stop, the progress spine, the social-circle hover. The
+white cards keep brand for their highlight mark, since those sit on `paper`.
+
+Both gutter rails take a three-way `surface` prop for exactly this reason — see
+CLAUDE.md. A second brand band is fine; a band in some *other* colour is not.
+
+---
+
+## Type
+
+**Archivo** site-wide, one family, variable, **self-hosted** since
+2026-11-12: `public/fonts/` (Latin and Latin Extended, Google's own v25
+files, SIL OFL), `@font-face` at the top of `src/index.css`, the Latin file
+preloaded in `index.html`. Not Google Fonts: that cost two extra connections
+before the font could start, sent visitors' IPs to Google, and on a slow
+phone the font arrived after the text and the hero re-wrapped.
+
+> Supersedes the earlier Montserrat decision (2026-07-26). Montserrat is the most
+> common font in AI-generated portfolios and reads templated. Archivo is
+> Swiss-industrial with a real width axis, which suits AI-infra work. **Do not
+> revert this.**
+
+Use the `type-hero` utility for display text — it sets the family, weight 700 and
+`font-variation-settings: 'wdth' 104`, opening the width axis slightly for
+industrial weight. Body text inherits Archivo 400 from `body`.
+
+**One family for content; system monospace for machine metadata only.** The
+`--font-mono` token (`ui-monospace, SFMono-Regular, Menlo, Consolas`) is the
+single sanctioned exception, added 2026-08-21 with the Projects rebuild. It is
+the *system* stack deliberately — no font request, no dependency — and it is
+allowed on exactly one class of thing: values a machine produced or that name a
+machine artefact. Today that is the project cards' index numerals, `LIVE` /
+`SOURCE` status pills, repo paths, the derived counts pill, and the one quoted
+accuracy metric.
+
+It is **not** for prose, headings, eyebrows, buttons or labels. If you are
+reaching for `font-mono` on a sentence, the answer is Archivo. The point of the
+distinction is that a repo path *looks like* a repo path; a second family used
+decoratively just breaks the single-family rule with extra steps.
+
+| Role | Token | Value |
+| --- | --- | --- |
+| Display | `text-display` | `clamp(2.5rem, 5.2vw, 4.5rem)`, lh `0.98`, tracking `-0.02em` |
+| Section H2 | `text-h2` | `clamp(2rem, 4vw, 3rem)`, lh `1.05`, tracking `-0.01em` |
+| H3 | `text-h3` | `1.5rem` |
+| Lead | `text-lead` | `1.25rem` / `1.6` |
+| Body | `text-body` | `1.0625rem` / `1.7` |
+| Eyebrow | `text-eyebrow` | `0.8125rem`, uppercase, tracking `0.16em`, weight 600 |
+
+> `--text-display` deviates from the written brief's 48→96px. 96px overflows the
+> two-column hero the approved mockup uses. Restore the larger clamp only for a
+> genuinely full-width display heading.
+
+**Case is hierarchy.** The hero H1 is uppercase; section H2s are mixed case. That
+contrast is deliberate — don't flatten it.
+
+Measure: cap body copy with `max-w-[NNch]`, roughly 44–62ch. Long uppercase
+wide-tracked text is hard to read; keep eyebrows to one short line.
+
+---
+
+## Colour tokens
+
+| Token | Hex | Use |
+| --- | --- | --- |
+| `brand` | `#F15629` | the accent — base |
+| `brand-bright` | `#FF6B3D` | hover, gradient top, numerals on dark |
+| `brand-deep` | `#C7401A` | pressed, gradient bottom |
+| `ink` | `#121212` | nav pill, dark surfaces |
+| `ink-deep` | `#0B0B0B` | scrims |
+| `ink-raised` | `#1C1A1A` | raised card on dark (stats bar, work card) |
+| `paper` | `#FAF7F4` | page background |
+| `paper-2` | `#F1ECE7` | alternating section band |
+| `hairline` | `#E4DED8` | borders on light |
+| `heading` | `#141312` | headings and body on light |
+| `muted` | `#5C5651` | secondary text on light |
+| `dark-muted` | `#B9B4AF` | secondary text on dark |
+| `success` | `#2E9E5B` | availability dot only |
+
+Hairline on dark is `white/12`. Ghosted display text is `heading/50` on light and
+`white/35` on ink — **raised from `/25` on 2026-10-24**, because at `/25` the ghost
+line measured 1.73:1 against `paper`, under the 3:1 that large bold text needs.
+`/50` is 3.44:1 and `white/35` 3.21:1; don't drop either back. The one ghost that
+cannot pass is Certifications' `white/40` on `brand` (1.61:1): no tint of white
+reaches 3:1 on orange without stopping being a ghost, so it stays as the knowing
+exception. Watermark text is `heading/[0.028]` — if you can comfortably read it,
+it's too strong.
+
+Signature gradient: `linear-gradient(180deg, brand, brand-deep)` on pill CTAs,
+with the label in **bold**. It started at `brand-bright`, where white 12px
+semibold text measured 2.83:1; from `brand` it is 3.44:1, which passes because
+bold text needs 3:1. Keep both halves — the top stop *and* the weight. Hover is
+`brightness-110`, not a colour swap.
+
+**The hero is light.** The written brief describes a dark `#121212` hero; the
+approved mockup is warm `#FAF7F4` with a dark floating nav. The mockup wins.
+
+---
+
+## Section anatomy
+
+Every content section follows the same skeleton. Match it:
+
+```tsx
+<section id="…" className="scroll-mt-28 px-4 py-20 sm:px-6 lg:px-20 lg:py-28">
+  <div className="mx-auto max-w-6xl">
+    <div className="min-w-0">
+      <h2 data-reveal className="type-hero text-display leading-[0.92] uppercase">
+        <span className="block text-heading">First line</span>{' '}
+        <span className="block text-heading/50">second<span className="text-brand">.</span></span>
+      </h2>
+      …
+    </div>
+  </div>
+</section>
+```
+
+Two things are load-bearing:
+
+1. **`lg:px-20`** — the gutter `SocialRail` occupies. Non-negotiable on new sections.
+2. **Two-tone stacked heading** — solid line over a `heading/50` ghost line, with
+   the full stop in orange. This is the site's signature; keep it consistent.
+
+**No `0N / NAME` eyebrow above the heading** — removed from every section
+2026-10-21 on Ahmed's call. `SectionRail` already shows the numbers, so the label
+repeated the rail a few hundred pixels to its right, and a numbered eyebrow over
+a display heading is a stock AI-template tell. The heading opens the section.
+
+Alternate backgrounds so sections separate without rules: hero zone `paper` +
+grid, about `paper-2`, experience `paper`, skills `paper-2`, services `paper`,
+reviews `paper-2`. The page then closes on three full-bleed bands: method `ink`,
+projects `ink`, certifications `brand`.
+
+**Don't reach for a card grid by default.** Work, Projects and Certifications are
+all card sets already; a fourth would flatten the page into one repeated shape.
+Services is a numbered accordion index for exactly that reason, Reviews is one
+running paragraph of pull-quotes over an expandable source ledger rather than five
+testimonial cards, and the next new section should look for its own form too.
+
+Vertical rhythm comes from **one token pair**, not per-section classes: the
+`section-y` utility (`--space-section`, 5rem / 7rem at `lg`) and `pt-nav`
+(`--space-nav`) for fixed-nav clearance. Both live in `src/index.css`; change the
+rhythm there and every section follows. The two pinned bands (Method, Certifications) take no section
+padding — see CLAUDE.md for why. Within a column, step `mt-9`/`mt-10`/`mt-12`
+between blocks. Don't invent new spacing values.
+
+**One content max-width: `max-w-6xl` (1152px).** Every content wrapper on the page
+uses it, so all sections share one grid. The nav is the single exception
+(`max-w-7xl`) because it's a floating pill rather than a content column.
+
+**Every section H2 is `text-display`** — no section gets a smaller heading step,
+or it reads as the lesser section. The two pinned panels pay for that out of their
+fold budget via the `short` variant; see CLAUDE.md before adding content to them.
+
+---
+
+## Components
+
+**Radii.** Pills and chips `rounded-full`; cards `rounded-[1.75rem]`; the hero
+portrait `rounded-[2rem]`; small tags and icon plates `rounded-lg` / `rounded-xl`.
+
+**Elevation is subtle and warm**, never a grey box-shadow:
+`shadow-[0_10px_26px_-20px_rgb(20_19_18/0.55)]`. Prefer `ring-1 ring-hairline`
+for definition over a heavy shadow.
+
+**Buttons.** Primary is a gradient pill, uppercase, `text-[0.75rem]`, tracking
+`0.14em`, with a directional icon that shifts on hover. Secondary is the same
+shape, outlined `border-heading/20`, hovering to brand. Icon-only buttons need an
+`aria-label` — and if a button's purpose isn't obvious from its icon, give it a
+label instead. (The mockup's bare `↓` circle became "SEE THE WORK" for this
+reason.)
+
+**Interactive state.** For a *small* filter set, filtered-out items drop to
+`text-heading/25` with
+`ring-heading/8` and `scale-[0.97]`; active items get a white fill, hairline ring
+and soft shadow. Selected nav/tab items invert to `bg-ink text-white`.
+
+---
+
+## Motion
+
+Full detail in [CLAUDE.md](CLAUDE.md). The design rules:
+
+- **Everything is gated on `prefers-reduced-motion`.** Hidden states must never
+  be applied under reduced motion — content is visible by default and motion is
+  the enhancement.
+- **Reveals fire once.** Never replay on scroll-up.
+- **Stagger, don't cascade.** 60–80ms between siblings via `[--reveal-delay:]`.
+  Anything longer feels sluggish.
+- **Motion is tokens, not per-element values** (2026-10-24). `@theme` in
+  `index.css` overrides Tailwind's defaults, so a bare `transition` is already
+  220ms on `cubic-bezier(0.22, 1, 0.36, 1)` (quick out, soft landing), and so is
+  `ease-out`. `ease-spring` is a damped spring sampled into `linear()` (3.8%
+  overshoot) for things that should feel physical. Don't hand-write a curve.
+- **Everything you can press gives under the finger.** The `press` utility
+  scales to `--press` (0.96 default) on `:active` and springs back. Full-width
+  rows set `[--press:0.985]`, cards `active:scale-[0.99]`. A new button without
+  it reads as dead. It owns its `transition-property`, so don't also put
+  `transition` on the same element.
+- **Section headings rise line by line out of a mask**, solid line then ghost,
+  from one rule on `:is(h1, h2)[data-reveal] > .block`. Keep two-tone headings
+  as `.block` spans and they get it for free; page H1s built that way do too.
+- **Three scroll-linked moments, no more**: the hero recedes as it leaves, the
+  thesis in About lights up in reading order, the featured project opens from
+  an inset window. Native `animation-timeline: view()`; Firefox simply gets the
+  static page. A fourth would make scroll-linking the page's texture instead of
+  its emphasis. That count is the home page's. A service page has its own
+  two: the problem statement's `scroll-read` and the sticky story, where the
+  diagram builds as the steps pass. The story is the page's point, so it is
+  allowed to carry it; don't add a third there either.
+- **Service diagrams are diagrams**, like `ProjectMark`: ink stage, generic
+  parts, one accent. Unbuilt is a dashed outline, current is orange, done is
+  solid. A pulse only runs on links into the current step, so motion always
+  points at what the text is talking about.
+- Durations: hovers 220ms (the default), reveals `0.8s`, line reveals `0.9s`,
+  presses 120ms in / 300ms spring out.
+- **No scroll snapping** (removed 2026-08-12, see CLAUDE.md).
+- Transforms and opacity only. No animating layout properties.
+- **The two gutters are a pair.** `SectionRail` (progress, left) and `SocialRail`
+  (links, right) both live in the `lg:px-20` gutter. Keep them symmetric and
+  quiet at rest — thin ticks, labels only on hover. If either starts competing
+  with content for attention, it's wrong.
+
+---
+
+## Accessibility floor
+
+Not optional, and not to be simplified away:
+
+- Icon-only controls carry `aria-label`; decorative SVGs carry `aria-hidden`.
+- Animated numbers keep an `sr-only` span with the final value so screen readers
+  aren't read a ticking digit.
+- Don't use `role="tab"` without arrow-key handling — plain buttons with
+  `aria-current` are honest. The Work switcher does this deliberately.
+- Focus is visible everywhere: `:focus-visible` outlines in brand orange with
+  `outline-offset: 3px`.
+- Interactive targets ≥ 44px.
+- Body text on `paper` must stay at or above `muted` (`#5C5651`, ~6.7:1). Small
+  uppercase wide-tracked text needs `heading/80` or darker. **No opacity-tinted
+  small text at rest** (`heading/30`, `muted/60` and the like measured 2–3:1 and
+  were all raised to `muted` on 2026-10-24); the orange is for the active state.
+- Anything hidden but space-reserving must be `aria-hidden` **and**
+  `tabIndex={-1}`, or keyboard users tab into invisible controls.
+
+---
+
+## Anti-slop checklist
+
+Things that would make this site look generic. Avoid all of them:
+
+- Multi-colour category dots or real brand-coloured logos.
+- Purple/blue gradient hero, glassmorphism cards, generic drop shadows.
+- Centred everything — this site is left-aligned.
+- Emoji as icons.
+- Identical grey paragraph blocks: differentiate lead / pull-quote / body.
+- Sections that all animate identically on entry with no stagger.
+- Placeholder lorem text, or invented credentials to fill a layout.
+- Adding a dependency for something a few lines of CSS handles.
+- **Breadcrumb trails** (`Blog / Data Science / …`, `Services / RAG …`) or any
+  other path-style label above a heading. Ahmed had them removed from every
+  page on 2026-11-12 ("looks like an AI-generated website"). A sub-page gets
+  one back pill from `sm` up, and nothing on a phone.
+- **Generated imagery standing in for a product screenshot.** The Projects
+  gallery shipped with seven AI-made poster cards until 2026-08-21; four had
+  hallucinated text baked into the pixels ("BeautifulSooup", "TenFolox",
+  "AFKBSIO", "INPISODFRAITE CONTENT DKTBSCTED"), one invented a "97%
+  Confidence" figure that appears in no repo, and all seven sat in fake browser
+  chrome, off-palette.
+
+  **The line is whether a viewer could believe they are looking at the product.**
+  A real capture of a real screen is always fine, including its own colours —
+  `segments` and `flintgrab` are both captures, and they outrank the
+  single-accent rule because they are evidence rather than decoration —
+  Flintgrab's lime `#A8E84D` is that product's own identity, not a second
+  accent chosen for this page. A flat, textless, single-accent *diagram* is
+  also fine, and is what the five imageless projects carry (`ProjectMark.tsx`);
+  nobody mistakes an orange line drawing for a screenshot. The middle — a
+  photo-real render of a product that does not exist — is what got this section
+  flagged.
+
+  **Two cards sit in that middle by Ahmed's explicit choice** (`padelgpt` is a
+  mockup, `ppe-safety` a generated poster; he asked for both by name after being
+  shown what they were). Don't quietly swap them out, and **don't add a third
+  without asking him.** See CLAUDE.md.
+
+---
+
+## The blog (reading surfaces)
+
+- **Paper, not ink.** Projects is a gallery and sits on ink; posts are long
+  reading and sit on the same light ground as the site's prose.
+- **Post titles are mixed case** at `text-display` (`text-h2` on the index),
+  with `text-balance`. Uppercase is for section headings; a title is a
+  sentence, and long wide uppercase is the hardest text here to read.
+- `.prose`: 68ch measure, 1.125rem/1.75, text in `heading` (not `muted` —
+  a whole article in the secondary colour reads as a caption). Each `h2` carries
+  a short orange rule above it, the section full stop at article scale.
+- **Code is one accent too.** Keywords `brand-bright`, strings a warm sand
+  (`#f2c4a8`), comments `white/45`, everything else near-white on `ink`. A
+  rainbow theme would be fifteen accents on a site that allows one. Program
+  output (` ```output `) is a printout: paper-2, hairline, no colour.
+- **Covers are drawn, never pictured** (`PostCover.tsx`): ink, the hero grid,
+  a slug-seeded dot field with orange signal dots. No stock, no generated
+  images. Charts inside a post are real renders of real data, in the palette
+  (`brand` for the point, a light tint of it for context).
+- **The post masthead is the one centred block on the site** — editorial
+  convention, chosen by Ahmed. Running text stays left-aligned, and so does the
+  blog index.
+- Index: a featured story (cover beside copy from `lg`) over a two-column grid
+  of cover cards. Back control is a white pill with a chevron chip, never a
+  bare text link.
+
+## Two knowing exceptions
+
+Both were asked for directly. Don't "fix" them, and don't treat either as a
+precedent.
+
+- **The footer credit uses a ❤️ emoji**, against the anti-slop rule above, and its
+  red is the only non-palette colour on the page. An SVG heart in `text-brand`
+  undoes both in one line if that trade stops being worth it.
+- **Stack hides filtered-out pills rather than dimming them.** The dim-out is still
+  the rule for small filter sets; with 55 pills it left 40+ ghosts crowding the four
+  you selected.
