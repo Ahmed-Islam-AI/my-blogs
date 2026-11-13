@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI &amp; Data Science Blog — Ahmed Islam</title>
+    <meta
+      name="description"
+      content="Case studies and guides on AI engineering and the web by Ahmed Islam: what worked, what broke, and the code that fixed it."
+    />
+    <!-- Share previews, rewritten per page at build from src/site.ts and each post's frontmatter.
+         Keep every tag: blog.vite.ts throws if one is missing. -->
+    <link rel="canonical" href="https://blog.ahmedislam.tech/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ahmed Islam" />
+    <meta property="og:title" content="AI &amp; Data Science Blog — Ahmed Islam" />
+    <meta
+      property="og:description"
+      content="Case studies and guides on AI engineering and the web by Ahmed Islam: what worked, what broke, and the code that fixed it."
+    />
+    <meta property="og:url" content="https://blog.ahmedislam.tech/" />
+    <meta property="og:image" content="https://blog.ahmedislam.tech/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- The Person block is the portfolio's, same @id, so posts and portfolio are one author.
+         `sameAs` must match src/data/socials.ts (not WhatsApp); a DEV check there warns if they drift. -->
+    <script type="application/ld+json" id="person-ld">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://ahmedislam.tech/#person",
+            "name": "Ahmed Islam",
+            "jobTitle": "Full-Stack AI Engineer",
+            "description": "Full-Stack AI Engineer building agentic AI systems, RAG pipelines, machine learning models and web apps.",
+            "url": "https://ahmedislam.tech/",
+            "image": "https://ahmedislam.tech/og.png",
+            "sameAs": [
+              "https://www.linkedin.com/in/ahmed-islam-ai/",
+              "https://github.com/Ahmed-Islam-AI",
+              "https://www.upwork.com/freelancers/~013d744c3e6673db44",
+              "https://ahmed-islam.medium.com/",
+              "https://leetcode.com/u/user9234eM/",
+              "https://x.com/DevAhmedAI",
+              "https://www.instagram.com/ahmedislam.ai",
+              "https://facebook.com/AhmedIslamAI"
+            ]
+          },
+          {
+            "@type": "Blog",
+            "@id": "https://blog.ahmedislam.tech/#blog",
+            "name": "Ahmed Islam — Notes from the build",
+            "url": "https://blog.ahmedislam.tech/",
+            "inLanguage": "en",
+            "author": { "@id": "https://ahmedislam.tech/#person" },
+            "publisher": { "@id": "https://ahmedislam.tech/#person" }
+          }
+        ]
+      }
+    </script>
+    <meta name="theme-color" content="#faf7f4" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script>
+      // Decoder half of the GitHub Pages SPA shim; must match public/404.html
+      if (location.search[1] === '/') {
+        var decoded = location.search
+          .slice(1)
+          .split('&')
+          .map(function (part) {
+            return part.replace(/~and~/g, '&')
+          })
+          .join('?')
+        history.replaceState(null, '', location.pathname.slice(0, -1) + decoded + location.hash)
+      }
+    </script>
+
+    <!-- Starts the self-hosted Archivo font with the HTML. A font preload needs `crossorigin`
+         even on the same origin, or it is fetched twice. -->
+    <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <!-- prerender.mjs finds the root div below by its exact text: keep it empty and unchanged,
+         and never quote it in a comment -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
