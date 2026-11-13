@@ -116,17 +116,17 @@
 }
 
 /* One vertical rhythm for the whole page; change it here, not per section. `--space-nav`
-   is the fixed nav's clearance: just over its height, 114px with the topic row below lg, 77px from lg. */
+   is the floating nav's clearance, the same values as the portfolio's, since it is the same pill. */
 @layer base {
   :root {
     --space-section: 5rem;
-    --space-nav: 7.25rem;
+    --space-nav: 5.5rem;
   }
 
   @media (min-width: 64rem) {
     :root {
       --space-section: 7rem;
-      --space-nav: 5.5rem;
+      --space-nav: 6.5rem;
     }
   }
 }

@@ -48,16 +48,16 @@ He chose each answer below from mock-ups.
 
 - **"Not sticky" could not be reproduced**: measured, the floating pill stayed at the top on
   every scroll position, in dev and in the build. The likely cause is a full-page screenshot,
-  which draws a fixed bar once at the top of the image. The new bar is pinned to the top
-  edge, full width, so there is no gap above it to make it look detached.
-- **Nav: a topic bar with search.** Name and blog name left, topics (All, Articles, Case
-  studies) centre, search right; below `lg` the topics take a second row. The topics *are*
-  the index's filter, as links to `/?type=…`, so a filtered view can be shared and the back
-  button works. The current topic gets an orange underline, a shape and not only a colour.
-- **It tightens on scroll by moving, not resizing**: the bar rises 8px and its content drops
-  4px, which trims the top padding with transforms only (STYLE.md: no animating layout).
-- **`--space-nav` follows the bar**: 7.25rem below `lg` (the bar is 114px with its topic
-  row), 5.5rem from `lg` (77px). The floating pill needed 5.5/6.5. Re-measure if the bar changes.
+  which draws a fixed bar once at the top of the image.
+- **Nav: the portfolio's floating pill, with the blog's contents.** A full-width bar pinned
+  to the top edge (with a shrink on scroll) was built first and rejected the same day: Ahmed
+  wants the same floating, rounded, fixed pill as the official site. It is now that pill's
+  markup exactly (measured identical position, size, radius and colour at 1440, 1024 and
+  390), with the topics (All, Articles, Case studies) where the portfolio has its section
+  links, the portfolio's sliding dot under the current one, and Search where the portfolio
+  has its orange CTA. Below `lg` the topics move into the portfolio's menu sheet. The topics
+  *are* the index's filter, as links to `/?type=…`, so a filtered view can be shared.
+- `--space-nav` is the portfolio's (5.5rem / 6.5rem), since it is the same pill.
 - **The index**: the header, then the newest post as the featured card (now with a "Latest"
   eyebrow), then **All posts** as hairline rows (date, kind, title, summary, reading time),
   with tag chips above them. The list includes the featured post: it is the archive, and
